@@ -1,0 +1,30 @@
+{% extends "main.html" %}
+{% load static %}
+{% block pageBody %}
+<div class="container-fluid">
+    <div class = "col-md-12 auction-report">
+        <span class = "font-h2">
+            Previous Auctions
+        </span>
+        <br>
+        <table class = "table table-stiriped">
+        <tr>
+            <th class = "col-md-3">Item</th>
+            <th class = "col-md-3">Auctioned On</th>
+            <th class = "col-md-3">Price</th>
+            <th class = "col-md-3">Winner</th>
+        </tr>
+            {% for auction in previousAuctions %}
+                <tr class = "previous-auction">
+                    <td>{{ auction.name }}</td>
+                    <td>{{ auction.endTime |date}}</td>
+                    <td>{{ auction.bidAmount }}</td>
+                    <td>{{ auction.winner.name }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+
+{% endblock %}

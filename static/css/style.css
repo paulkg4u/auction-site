@@ -1,0 +1,105 @@
+body {
+  padding-top: 50px;
+  background-color: #f0f0f0;
+}
+.flex-display{
+  display: flex;
+}
+
+.flex-container{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.starter-template {
+  padding: 40px 15px;
+  text-align: center;
+}
+
+.text-center{
+    text-align: center;
+}
+.height-100{
+    height:100%;
+}
+.height-50{
+    height:50%;
+}
+.no-padding{
+    padding:0px !important;
+}
+.padding-20{
+    padding: 20px !important;
+}
+.padding-10{
+    padding: 10px !important;
+}
+.center{
+    text-align: center;
+}
+
+.font-h2{
+    font-size: 30px;
+}
+
+
+.font-h3{
+    font-size: 25px;
+}
+
+.font-h1{
+    font-size: 35px;
+}
+
+.font-h4{
+    font-size: 20px;
+}
+
+.font-h5{
+    font-size: 15px;
+}
+
+.nav-container{
+    margin-right: 40px;
+    margin-left: 40px;
+}
+.live-auction{
+    height:70vh;
+}
+
+.upcoming-auction{
+    height:200px;
+}
+.auction-report, .upcoming-auctions-container{
+    padding: 20px;
+}
+
+.live-auction-image{
+    padding: 20px;
+    height: 100%;
+}
+
+.live-auction-content{
+    padding: 20px;
+    height: 100%;
+}
+
+.product-image{
+    width: 80%;
+}
+
+.product-desc, .current-bid, .min-amount,.bid-now-button,.countdown-timer,.previous-auction{
+    line-height:2;
+    font-size: 18px;
+}
+
+.countdown-timer-value{
+    color: #a41515;;
+}
+.live-auction-text{
+    font-size: 33px;
+    color: #a41515;
+}
+.show-after-angular{
+    display: none;
+}

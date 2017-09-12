@@ -1,0 +1,149 @@
+{% extends "main.html" %}
+{% load static %}
+{% block pageBody %}
+<div class="container" ng-controller="homePageController">
+    {% if hasLiveAuction%}
+        <div class = "col-md-12 live-auction">
+        <div class = "col-md-4 live-auction-image text-center">
+
+            <img src="/media/{{liveAuction.itemImage}}" alt="" class = "product-image">
+        </div>
+        <div class = "col-md-8 live-auction-content">
+
+            <span class = "live-auction-text">
+                Live Auction
+            </span>
+            <br>
+            <span class = "font-h2">
+                {{ liveAuction.name }}
+            </span>
+            <br>
+            <span class = "product-desc">
+                <b>Description</b><br>
+                {{ liveAuction.description}}
+            </span>
+            <br>
+            <span class = "current-bid">
+                <b> Current Bid:</b>{{ liveAuction.currentBid}}
+            </span>
+            <br>
+            <span class = "min-amount">
+                <b>Min Bid :</b>{{ liveAuction.minAmount }}
+            </span>
+            <br>
+            <span class = "bid-now-button">
+                <button class = "btn btn-success btn-lg" ng-click = "bidNow()">Bid Now</button>
+            </span>
+        </div>
+    </div>
+        {% else %}
+        {% if upcomingAuction %}
+            <div class = "col-md-12 live-auction">
+        <div class = "col-md-4 live-auction-image text-center">
+
+            <img src="/media/{{upcomingAuction.itemImage}}" alt="" class = "product-image">
+        </div>
+        <div class = "col-md-8 live-auction-content">
+
+            <span class = "live-auction-text">
+                Upcoming Auction
+            </span>
+            <br>
+            <span class = "font-h2">
+                {{ upcomingAuction.name }}
+            </span>
+            <br>
+            <span class = "product-desc">
+                <b>Description</b><br>
+                {{ upcomingAuction.description}}
+            </span>
+            <br>
+            <span class = "min-amount">
+                <b>Min Bid :</b>{{ upcomingAuction.minAmount }}
+            </span>
+            <br>
+            <span class = "countdown-timer show-after-angular" ng-show = "showTimer" ng-init = "startTimer('{{ upcomingAuction.startTime|date:"c" }}')">
+                <b>Starts in :</b>
+                <span class = "countdown-timer-value">
+                    [[secondsRemaining | secondsToDayHourMin]]
+                </span>
+
+            </span>
+            <span class = "bid-now-button show-after-angular" ng-show = "showTimer == false">
+                <button class = "btn btn-success btn-lg" ng-click = "bidNow()">Bid Now</button>
+            </span>
+
+        </div>
+    </div>
+            {% else %}
+                <div class = "col-md-12 live-auction text-center">
+                    <span class = "live-auction-text">
+                        Sorry! No upcoming aucions.
+            </span>
+                </div>
+            {% endif %}
+
+    {% endif %}
+    <div class="modal fade" id="bidSuccessModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">Bid Now</h4>
+                    </div>
+                    <div class="modal-body">
+                        Bid Success
+                        <div class="form-group" style="text-align: right;">
+                            <div type="button" class="btn btn-default" data-dismiss="modal">Okay</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="bidNowModal" tabindex="-1" role="dialog" aria-labelledby="bidModal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="suggestEditModal">Bid Now</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="bidForm" ng-submit = "submitBid()">
+                            {% csrf_token %}
+                            <div class="form-group col-md-12">
+                                <label for="name">
+                                    Title
+                                </label>
+                                <input name="name" id="name" type="text" ng-model="name" class="form-control" required="true">
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label for="email">
+                                    Email
+                                </label>
+                                <input name="email" id="email" type="text" ng-model="email" class="form-control" required="true">
+                            </div>
+                            <div class = "form-group col-md-12">
+                                <label for="bidAmount">
+                                    Amount
+                                </label>
+                                <input name = "bidAmount" id = "bidAmount" type="number" ng-model = "bidAmount" class="form-control" required="true">
+                            </div>
+                            <div class="form-group" style="text-align: right;">
+                                <div type="button" class="btn btn-default" data-dismiss="modal">Close</div>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+</div>
+    <script>
+
+    console.log()
+    </script>
+{% endblock %}
