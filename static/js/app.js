@@ -1,9 +1,15 @@
 var auctionApp = angular.module('auctionApp', []);
 
 angular.module('auctionApp').controller('homePageController', function($scope, $rootScope, $http, $interval) {
-    console.log("homePageController");
-    
-    $scope.showTimer = false;
+
+
+    $scope.product= function(product){
+        console.log(product);
+    }
+    $scope.setProduct = function (productId) {
+        $scope.productId = productId;
+    };
+
     $scope.bidNow = function () {
         $scope.name = "";
         $scope.email = "";
@@ -12,8 +18,23 @@ angular.module('auctionApp').controller('homePageController', function($scope, $
     };
     
     $scope.submitBid = function () {
-        console.log($scope.name);
-        console.log($scope.email);
+        $http({
+            method:'POST',
+            url :'/bids/submitBid/',
+            data : {
+            'productId':$scope.productId,
+            'name':$scope.name,
+            'email':$scope.email,
+            'amount':$scope.bidAmount
+        }
+        }).then(function successCallback(response) {
+            console.log(response);
+            $('#bidNowModal').modal("hide");
+            $('#bidSuccessModal').modal();
+        }, function errorCallback(response) {
+            console.log(response);
+            $('#bidNowModal').modal("hide");
+        })
     }
     
     $scope.startTimer = function (startTime) {
@@ -59,4 +80,8 @@ angular.module('auctionApp').config(function($interpolateProvider) {
     $interpolateProvider.startSymbol('[[');
     $interpolateProvider.endSymbol(']]');
 });
-
+angular.module('auctionApp').config(function($httpProvider) {
+    $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+    $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+    $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+});

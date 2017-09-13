@@ -3,8 +3,8 @@
 {% block pageBody %}
 <div class="container" ng-controller="homePageController">
     {% if hasLiveAuction%}
-        <div class = "col-md-12 live-auction">
-        <div class = "col-md-4 live-auction-image text-center">
+        <div class = "col-md-12 live-auction" ng-init = "setProduct({{ liveAuction.id }})">
+        <div class = "col-md-4 live-auction-image text-center" ng-init = "product">
 
             <img src="/media/{{liveAuction.itemImage}}" alt="" class = "product-image">
         </div>
@@ -38,7 +38,7 @@
     </div>
         {% else %}
         {% if upcomingAuction %}
-            <div class = "col-md-12 live-auction">
+            <div class = "col-md-12 live-auction" ng-init = "setProduct({{ liveAuction.id }})">
         <div class = "col-md-4 live-auction-image text-center">
 
             <img src="/media/{{upcomingAuction.itemImage}}" alt="" class = "product-image">
@@ -114,7 +114,7 @@
                             {% csrf_token %}
                             <div class="form-group col-md-12">
                                 <label for="name">
-                                    Title
+                                    Name
                                 </label>
                                 <input name="name" id="name" type="text" ng-model="name" class="form-control" required="true">
                             </div>

@@ -3,9 +3,13 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render
 from django.utils import  timezone
+from django.http import JsonResponse
+
+import json
 
 from auctionsite.models import  AuctionObject
 from auctionsite.models import  Bidder
+from auctionsite.libs import userLib
 # Create your views here.
 
 def index(request):
@@ -36,7 +40,16 @@ def viewAuction(request, auctionId):
     response = {'auctionObject':auction}
     return render(request, 'auction_site/product.html', response)
 
-def bid(request, auctionId):
-    auctionObject = AuctionObject.objects.get(id = auctionId)
-    pass
+def submitBid(request):
+    if request.POST:
+        newBid = json.loads(request.body)
+        print newBid
+        product = AuctionObject.objects.get(id=newBid['productId'])
+        if product.currentBid < newBid['amount']:
+            bidder = userLib.getOrCreateBidder(newBid['email'], newBid['name'])
+            product.bidAmount = product.currentBid = newBid['amount']
+            product.winner = bidder
+            product.save()
+        response = {'success':True}
+    return JsonResponse(response)
 
